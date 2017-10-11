@@ -3,6 +3,7 @@ use std::error;
 use std::fmt;
 use std::convert::From;
 use std::io;
+use walkdir;
 
 #[derive(Debug)]
 pub enum SignError {
@@ -42,6 +43,12 @@ impl error::Error for SignError {
 impl From<io::Error> for SignError {
     fn from(err: io::Error) -> SignError {
         SignError::Io(err)
+    }
+}
+
+impl From<walkdir::Error> for SignError {
+    fn from(err: walkdir::Error) -> SignError {
+        SignError::Io(io::Error::new(io::ErrorKind::Other, err))
     }
 }
 
