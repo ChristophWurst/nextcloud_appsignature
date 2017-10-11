@@ -1,0 +1,10 @@
+[package]
+name = "nextcloud_appsignature"
+version = "0.1.0"
+authors = ["Christoph Wurst <christoph@winzerhof-wurst.at>"]
+
+[dependencies]
+base64 = "0.7"
+futures = "0.1"
+hex = "0.2"
+openssl = "0.9"
