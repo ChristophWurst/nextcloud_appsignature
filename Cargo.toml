@@ -12,8 +12,8 @@ exclude = [
 ]
 
 [dependencies]
-base64 = "0.7"
+base64 = "0.9"
 failure = "0.1"
 futures = "0.1"
-hex = "0.2"
-openssl = "0.9"
+hex = "0.3"
+openssl = "0.10"

@@ -19,7 +19,7 @@ pub fn sign_package(key_path: &Path, file_path: &Path) -> Result<String, Error> 
     let mut buf_read = BufReader::new(package_file);
     copy(&mut buf_read, &mut signer)?;
 
-    let signature = signer.finish()?;
+    let signature = signer.sign_to_vec()?;
 
     Ok(encode(&signature))
 }
