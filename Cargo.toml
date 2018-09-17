@@ -15,5 +15,5 @@ exclude = [
 base64 = "0.7"
 failure = "0.1"
 futures = "0.1"
-hex = "0.2"
+hex = "0.3"
 openssl = "0.9"
