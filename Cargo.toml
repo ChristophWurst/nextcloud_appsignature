@@ -1,6 +1,6 @@
 [package]
 name = "nextcloud_appsignature"
-version = "0.3.0"
+version = "0.4.0"
 authors = ["Christoph Wurst <christoph@winzerhof-wurst.at>"]
 description = "Library to sign Nextcloud apps"
 readme = "README.md"
@@ -10,10 +10,9 @@ license = "GPL-3.0"
 exclude = [
     ".vscode",
 ]
+edition = "2018"
 
 [dependencies]
 base64 = "0.11"
 failure = "0.1"
-futures = "0.1"
-hex = "0.4"
 openssl = "0.10"

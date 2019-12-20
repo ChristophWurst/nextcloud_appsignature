@@ -8,7 +8,7 @@ use openssl::sign::Signer;
 use openssl::pkey::PKey;
 use openssl::hash::MessageDigest;
 
-use super::keys::get_private_key;
+use crate::keys::get_private_key;
 
 pub fn sign_package(key_path: &Path, file_path: &Path) -> Result<String, Error> {
     let package_file = File::open(file_path)?;
