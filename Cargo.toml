@@ -13,6 +13,6 @@ exclude = [
 edition = "2018"
 
 [dependencies]
-base64 = "0.11"
+base64 = "0.12"
 failure = "0.1"
 openssl = "0.10"
