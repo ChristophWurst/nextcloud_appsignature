@@ -37,3 +37,12 @@ maAQ0dEByeQqLYqSZTJU46Ry2rZE/8oDmF4ezsnxlbQQEVzvgzPPUD3DoqHX5hnb
 TAuBWEQYH2oJLdmwC5ncLQKWCKtLjY3ozMULse0MgHXrlFh6zKKf8j9Wx7FIaWyF
 swIDAQAB
 -----END PUBLIC KEY-----";
+
+pub static TEST_CONTENT: &'static [u8] = b"FOO";
+
+pub static EXPECTED_SIGNATURE: &'static str = "Y64cx3UmfB0DVYO96e\
+Ke5vYrVYDxXZXAJusSKEbh1JogjpMqKlzUlYMpZNkFAGMDUKkCo0QktyE5wH/v2/E\
+QyRW5VxyU3UkC16vG7KgD4h9yskUNQGhbo7ux9B2aWwWhDCbr3UAJN/eHguR65nnG\
+Tq4jszjcmndQqSNUQHg4PUSujrDrx/R2dW/yXO9o4yWRog1keFiXDt1sKgghzFaui\
+TAXB/9xv+Z5fFixnHkpItSzJ9YH/P0gQqhom8ppsjdXqDw0lgjlZS7rmeeSjFCear\
+C5Iu8cM72zwAkNRA2ewOzD4D6VUUrncq0x/hWSpGmOTrHae9tv/d2lKMvPtZPq1A==";
