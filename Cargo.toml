@@ -14,5 +14,6 @@ edition = "2018"
 
 [dependencies]
 thiserror = "1.0"
-base64 = "0.12"
-openssl = "0.10"
+base64 = "0.13"
+rsa = "0.3"
+sha2 = "0.9.3"

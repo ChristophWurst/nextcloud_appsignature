@@ -1,4 +1,4 @@
-pub static PEM_PRIVATE_KEY: &'static [u8] = b"-----BEGIN PRIVATE KEY-----
+pub static PEM_PRIVATE_KEY: &'static str = "-----BEGIN PRIVATE KEY-----
 MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDM8e7XeoNRhzGT
 K/pXtXq4W52J62Yhsv6cldWP3GhiMIxp3jiKuKIbgQVR5XBYd9iAzHmsFz6KczwI
 95zZkL66VTw/YyHKdxFpNw4Z7RfmN/xUKqRGhJzO8NouampSUFEDeUhSPW6Rb0mg
