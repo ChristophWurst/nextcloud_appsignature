@@ -1,4 +1,4 @@
-use std::fs::{read_to_string, File};
+use std::fs::read_to_string;
 use std::io::{copy, BufReader, Read};
 use std::path::Path;
 
@@ -7,12 +7,11 @@ use base64::encode;
 use rsa::{padding::PaddingScheme, Hash, RSAPrivateKey};
 use sha2::{Digest, Sha512};
 
-pub fn sign_package(key_path: &Path, file_path: &Path) -> Result<String, Error> {
-    let package_file = File::open(file_path).map_err(Error::FailedToPackage)?;
+pub fn sign_package<R: Read>(key_path: &Path, content: &mut R) -> Result<String, Error> {
     let raw_key = read_to_string(key_path).map_err(|_| Error::KeyNotFound(key_path.into()))?;
     let key = decode_private_key(&raw_key)?;
 
-    let buf_read = BufReader::new(package_file);
+    let buf_read = BufReader::new(content);
     sign(buf_read, &key)
 }
 
@@ -32,7 +31,7 @@ fn sign(mut package: impl Read, key: &RSAPrivateKey) -> Result<String, Error> {
 fn decode_private_key(key_data: &str) -> Result<RSAPrivateKey, Error> {
     let der_encoded = key_data
         .split('\n')
-        .filter(|line| !line.starts_with("-"))
+        .filter(|line| !line.starts_with('-'))
         .fold(String::with_capacity(1024), |mut data, line| {
             data.push_str(line);
             data
