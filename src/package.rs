@@ -37,7 +37,9 @@ fn decode_private_key(key_data: &str) -> Result<RSAPrivateKey, Error> {
             data
         });
     let der_bytes = base64::decode(&der_encoded).map_err(|_| Error::InvalidKey)?;
-    RSAPrivateKey::from_pkcs8(&der_bytes).map_err(|_| Error::InvalidKey)
+    RSAPrivateKey::from_pkcs8(&der_bytes)
+        .or_else(|_| RSAPrivateKey::from_pkcs1(&der_bytes))
+        .map_err(|_| Error::InvalidKey)
 }
 
 #[test]
@@ -45,4 +47,11 @@ fn test_sign() {
     use crate::test::*;
     let key = decode_private_key(PEM_PRIVATE_KEY).unwrap();
     assert_eq!(EXPECTED_SIGNATURE, sign(TEST_CONTENT, &key).unwrap());
+}
+
+#[test]
+fn test_sign_rsa_key() {
+    use crate::test::*;
+    let key = decode_private_key(PEM_PRIVATE_KEY_RSA).unwrap();
+    assert_eq!(EXPECTED_RSA_SIGNATURE, sign(TEST_CONTENT, &key).unwrap());
 }
