@@ -1,6 +1,6 @@
 [package]
 name = "nextcloud_appsignature"
-version = "0.7.0"
+version = "0.7.1"
 authors = ["Christoph Wurst <christoph@winzerhof-wurst.at>"]
 description = "Library to sign Nextcloud apps"
 readme = "README.md"
