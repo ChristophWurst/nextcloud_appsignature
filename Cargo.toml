@@ -1,6 +1,6 @@
 [package]
 name = "nextcloud_appsignature"
-version = "0.7.1"
+version = "0.8.0"
 authors = ["Christoph Wurst <christoph@winzerhof-wurst.at>"]
 description = "Library to sign Nextcloud apps"
 readme = "README.md"
@@ -13,7 +13,7 @@ exclude = [
 edition = "2018"
 
 [dependencies]
-thiserror = "1.0"
+thiserror = "2.0"
 base64 = "0.22"
 rsa = "0.9"
-sha2 = "0.10.0"
+sha2 = { version = "0.10.0", features = ["oid"] }
