@@ -2,10 +2,14 @@ use std::fs::read_to_string;
 use std::io::{copy, BufReader, Read};
 use std::path::Path;
 
-use crate::Error;
-use base64::encode;
-use rsa::{padding::PaddingScheme, Hash, RSAPrivateKey};
+use base64::engine::general_purpose::STANDARD as BASE64;
+use base64::Engine;
+use rsa::pkcs1::DecodeRsaPrivateKey;
+use rsa::pkcs8::DecodePrivateKey;
+use rsa::{Pkcs1v15Sign, RsaPrivateKey};
 use sha2::{Digest, Sha512};
+
+use crate::Error;
 
 pub fn sign_package<R: Read>(key_path: &Path, content: &mut R) -> Result<String, Error> {
     let raw_key = read_to_string(key_path).map_err(|_| Error::KeyNotFound(key_path.into()))?;
@@ -15,20 +19,17 @@ pub fn sign_package<R: Read>(key_path: &Path, content: &mut R) -> Result<String,
     sign(buf_read, &key)
 }
 
-fn sign(mut package: impl Read, key: &RSAPrivateKey) -> Result<String, Error> {
+fn sign(mut package: impl Read, key: &RsaPrivateKey) -> Result<String, Error> {
     let mut hasher = Sha512::new();
     copy(&mut package, &mut hasher).map_err(Error::FailedToPackage)?;
     let signature = key
-        .sign(
-            PaddingScheme::new_pkcs1v15_sign(Some(Hash::SHA2_512)),
-            &hasher.finalize(),
-        )
+        .sign(Pkcs1v15Sign::new::<Sha512>(), &hasher.finalize())
         .map_err(Error::SignatureFailed)?;
 
-    Ok(encode(&signature))
+    Ok(BASE64.encode(&signature))
 }
 
-fn decode_private_key(key_data: &str) -> Result<RSAPrivateKey, Error> {
+fn decode_private_key(key_data: &str) -> Result<RsaPrivateKey, Error> {
     let der_encoded = key_data
         .split('\n')
         .filter(|line| !line.starts_with('-'))
@@ -36,9 +37,9 @@ fn decode_private_key(key_data: &str) -> Result<RSAPrivateKey, Error> {
             data.push_str(line);
             data
         });
-    let der_bytes = base64::decode(&der_encoded).map_err(|_| Error::InvalidKey)?;
-    RSAPrivateKey::from_pkcs8(&der_bytes)
-        .or_else(|_| RSAPrivateKey::from_pkcs1(&der_bytes))
+    let der_bytes = BASE64.decode(&der_encoded).map_err(|_| Error::InvalidKey)?;
+    RsaPrivateKey::from_pkcs8_der(&der_bytes)
+        .or_else(|_| RsaPrivateKey::from_pkcs1_der(&der_bytes))
         .map_err(|_| Error::InvalidKey)
 }
 
