@@ -16,4 +16,4 @@ edition = "2018"
 thiserror = "2.0"
 base64 = "0.23"
 rsa = "0.9"
-sha2 = { version = "0.10.0", features = ["oid"] }
+sha2 = { version = "0.11.1", features = ["oid"] }
